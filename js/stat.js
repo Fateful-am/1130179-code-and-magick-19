@@ -92,12 +92,6 @@ function renderStatisticCloud(ctx) {
  * @param {number[]} times                 массив содержит время прохождения уровня соответствующего игрока из массива names
  */
 window.renderStatistics = function (ctx, names, times) {
-  // Цвет столбца в статистике
-  var barColor;
-  // Высота столбца для игрока
-  var barHeight;
-  // индексная переменная
-  var i;
   // список строк в заголовке облака статистики
   var cloudCaptionStrings = ['Ура вы победили!', 'Список результатов:'];
   // Нижняя координата по y для гистограммы
@@ -109,22 +103,26 @@ window.renderStatistics = function (ctx, names, times) {
 
   renderStatisticCloud(ctx);
   // Отрисовка заголовка статистики
-  for (i = 0; i < cloudCaptionStrings.length; i++) {
+  for (var i = 0; i < cloudCaptionStrings.length; i++) {
     renderText(ctx, CLOUD_FONT, 'top', CLOUD_CAPTION_FONT_COLOR, cloudCaptionStrings[i], CLOUD_MARGIN_LEFT + CLOUD_CAPTION_MARGIN_LEFT,
         CLOUD_MARGIN_TOP + CLOUD_CAPTION_MARGIN_TOP + i * CLOUD_CAPTION_LINE_HEIGHT);
   }
 
+  // Цвет столбца в статистике
+  var barColor;
+  // Высота столбца для игрока
+  var barHeight;
   // Отрисовка столбцов и надписей гистограммы
-  for (i = 0; i < names.length; i++) {
-    barHeight = (times[i] / maxTime * BAR_HEIGHT);
+  for (var j = 0; j < names.length; j++) {
+    barHeight = (times[j] / maxTime * BAR_HEIGHT);
     // Определение цвета столбца
-    barColor = names[i] === 'Вы' ? BAR_OWN_COLOR : 'hsl(' + BAR_OTHER_COLOR_HUE + ', ' + Math.random() * 100 + '%, 50%)';
+    barColor = names[j] === 'Вы' ? BAR_OWN_COLOR : 'hsl(' + BAR_OTHER_COLOR_HUE + ', ' + Math.random() * 100 + '%, 50%)';
     // Отрисовка бара
     renderRectangle(ctx, barLeft, barBottom - barHeight, BAR_WIDTH, barHeight, barColor);
     // Отрисовка имени игрока
-    renderText(ctx, CLOUD_FONT, 'top', BAR_FONT_COLOR, names[i], barLeft, barBottom + BAR_TEXT_PADDING);
+    renderText(ctx, CLOUD_FONT, 'top', BAR_FONT_COLOR, names[j], barLeft, barBottom + BAR_TEXT_PADDING);
     // Отрисовка времени прохождения уровня
-    renderText(ctx, CLOUD_FONT, 'bottom', BAR_FONT_COLOR, Math.floor(times[i]).toString(), barLeft, barBottom - barHeight - BAR_TEXT_PADDING);
+    renderText(ctx, CLOUD_FONT, 'bottom', BAR_FONT_COLOR, Math.floor(times[j]).toString(), barLeft, barBottom - barHeight - BAR_TEXT_PADDING);
 
     barLeft += (BAR_WIDTH + BAR_GAP);
   }
