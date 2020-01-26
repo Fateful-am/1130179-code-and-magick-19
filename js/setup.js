@@ -4,7 +4,14 @@ var firstNames = ['Иван', 'Хуан Себастьян', 'Мария', 'Кр
 // Фамилии персонажей
 var secondNames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 // Цвета мантий персонажей
-var coatColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var coatColors = [
+  'rgb(101, 137, 164)',
+  'rgb(241, 43, 107)',
+  'rgb(146, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)'
+];
 // Цвет глаз персонажей
 var eyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
 
@@ -23,7 +30,7 @@ function visibleToggle(element, isVisible) {
 
 /**
  * Возвращает случайный элемент массива
- * @param {[]} array Входной массив
+ * @param {Array} array Входной массив
  * @return {string} случайный элемент массива
  */
 function getRandomArraysElement(array) {
@@ -36,8 +43,11 @@ function getRandomArraysElement(array) {
  */
 function getRandomWizard() {
   return {
+    // имя мага
     name: Math.random() >= 0.5 ? getRandomArraysElement(firstNames) + ' ' + getRandomArraysElement(secondNames) : getRandomArraysElement(secondNames) + ' ' + getRandomArraysElement(firstNames),
+    // цвет мантии
     coatColor: getRandomArraysElement(coatColors),
+    // цвет глаз
     eyesColor: getRandomArraysElement(eyesColors)
   };
 }
@@ -45,7 +55,7 @@ function getRandomWizard() {
 /**
  * Возвращает массив объектов магов
  * @param {number} count размер массива
- * @return {[]}
+ * @return {Array}
  */
 function getRandomWizards(count) {
   var wizards = [];
@@ -57,7 +67,7 @@ function getRandomWizards(count) {
 
 /**
  * Отрисовывает мага
- * @param {{}} wizard Объект - Маг
+ * @param {Object} wizard Объект - Маг
  * @return {Node} Узел с отрисованным магом
  */
 function renderWizard(wizard) {
