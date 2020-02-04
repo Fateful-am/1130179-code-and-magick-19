@@ -10,9 +10,25 @@ var ESC_KEY = 'Escape';
 var ENTER_KEY = 'Enter';
 
 // Имена персонажей
-var firstNames = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
+var firstNames = ['Иван',
+  'Хуан Себастьян',
+  'Мария',
+  'Кристоф',
+  'Виктор',
+  'Юлия',
+  'Люпита',
+  'Вашингтон'
+];
 // Фамилии персонажей
-var secondNames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+var secondNames = ['да Марья',
+  'Верон',
+  'Мирабелла',
+  'Вальц',
+  'Онопко',
+  'Топольницкая',
+  'Нионго',
+  'Ирвинг'
+];
 // Цвета мантий персонажей
 var coatColors = [
   'rgb(101, 137, 164)',
@@ -23,7 +39,11 @@ var coatColors = [
   'rgb(0, 0, 0)'
 ];
 // Цвет глаз персонажей
-var eyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
+var eyesColors = ['black',
+  'red',
+  'blue',
+  'yellow',
+  'green'];
 
 // Цвет файрбола
 var fireballColor = [
@@ -33,6 +53,26 @@ var fireballColor = [
   '#e848d5',
   '#e6e848'
 ];
+
+// Содержит ссылку на элемент с формой настроек персонажа
+var setupDialog = document.querySelector('.setup');
+// Контейнер открытия диалога настроек
+var setupOpen = document.querySelector('.setup-open');
+// Иконка открытия диалога настроек
+var setupOpenIcon = document.querySelector('.setup-open-icon');
+// Кнопка закрытия диалога настроек
+var setupClose = document.querySelector('.setup-close');
+// Блок для похожих персонажей
+var setupSimilar = document.querySelector('.setup-similar');
+// Имя мага
+var userNameInput = setupDialog.querySelector('.setup-user-name');
+// svg персонажа
+var setupWizard = setupDialog.querySelector('.setup-wizard');
+// форма для ввода характеристик персонажа
+var setupWizardForm = setupDialog.querySelector('.setup-wizard-form');
+// контейнер для файрбола
+var setupFireballWrap = setupDialog.querySelector('.setup-fireball-wrap');
+
 
 /**
  * Включение и выключение видимости элемента
@@ -120,25 +160,6 @@ function renderWizards() {
 
   similarListElement.appendChild(fragment);
 }
-
-// Содержит ссылку на элемент с формой настроек персонажа
-var setupDialog = document.querySelector('.setup');
-// Контейнер открытия диалога настроек
-var setupOpen = document.querySelector('.setup-open');
-// Иконка открытия диалога настроек
-var setupOpenIcon = document.querySelector('.setup-open-icon');
-// Кнопка закрытия диалога настроек
-var setupClose = document.querySelector('.setup-close');
-// Блок для похожих персонажей
-var setupSimilar = document.querySelector('.setup-similar');
-// Имя мага
-var userNameInput = setupDialog.querySelector('.setup-user-name');
-// svg персонажа
-var setupWizard = setupDialog.querySelector('.setup-wizard');
-// форма для ввода характеристик персонажа
-var setupWizardForm = setupDialog.querySelector('.setup-wizard-form');
-// контейнер для файрбола
-var setupFireballWrap = setupDialog.querySelector('.setup-fireball-wrap');
 
 /**
  * Действия необходимые при открытии окна настроек
@@ -244,7 +265,7 @@ function onInvalidUserNameInput() {
 }
 
 /**
- * Обработчик нажатия клавищ при открытом окне настроек по Esc
+ * Обработчик нажатия клавиш при открытом окне настроек по Esc
  * @param {KeyboardEvent} evt
  */
 function onSetupDialogKeyDown(evt) {
@@ -277,8 +298,9 @@ function initialisation() {
   setupWizardForm.action = 'https://js.dump.academy/code-and-magick';
   // Установка tabIndex, чтобы кнопка закрытия диалога настроек была доступна через клавиатуру
   setupClose.tabIndex = 0;
-  // Установка ограничения на минимальную длину имени
+  // Установка ограничения на минимальную и максимальную длину имени персонажа
   userNameInput.minLength = MIN_USER_NAME_LENGTH;
+  userNameInput.maxLength = MAX_USER_NAME_LENGTH;
   // Добавляем обработчик на открытие окна настроек
   setupOpen.addEventListener('click', onClickOpenSetupDialog);
   // Добавляем обработчик на некоректно введеное имя пользователя
