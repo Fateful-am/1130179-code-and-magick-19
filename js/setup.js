@@ -69,7 +69,6 @@
     userNameValidity(window.settings.setupUserName);
   }
 
-
   /**
    * Инициализация модуля
    */
@@ -80,9 +79,10 @@
     setupFireballWrap.addEventListener('click', onSetupFireballClick);
     // Добавляем обработчик на некоректно введеное имя пользователя
     window.settings.setupUserName.addEventListener('invalid', onInvalidUserNameInput);
-
     // Отрисовка блока с похожими магами
     window.wizards.renderWizards();
+    // Сброс позиции диалога в значения по умолчанию
+    window.settings.setupDialogWrapper.removeAttribute('style');
   }
 
   /**
@@ -93,6 +93,7 @@
     setupWizard.removeEventListener('click', onSetupWizardClick);
     // Удаялем обработчик клика по файрболу
     setupFireballWrap.removeEventListener('click', onSetupFireballClick);
+    // Удаялем обработчик нажатия кнопки мыши на аватар
     window.settings.setupUserName.removeEventListener('invalid', onInvalidUserNameInput);
   }
 
