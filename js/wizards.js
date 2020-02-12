@@ -5,7 +5,8 @@
 
   // Интерфейс модуля
   window.wizards = {
-    renderWizards: renderWizards // Отрисовка всех похожих магов
+    renderWizards: renderWizards, // Отрисовка всех похожих магов
+    getRandomWizards: getRandomWizards // Возвращает массив случайных объектов магов
   };
 
   /**
@@ -19,9 +20,9 @@
         window.utils.getRandomArraysElement(window.settings.secondNames) : window.utils.getRandomArraysElement(window.settings.secondNames) + ' ' +
         window.utils.getRandomArraysElement(window.settings.firstNames),
       // цвет мантии
-      coatColor: window.utils.getRandomArraysElement(window.settings.coatColors),
+      colorCoat: window.utils.getRandomArraysElement(window.settings.coatColors),
       // цвет глаз
-      eyesColor: window.utils.getRandomArraysElement(window.settings.eyesColors)
+      colorEyes: window.utils.getRandomArraysElement(window.settings.eyesColors)
     };
   }
 
@@ -50,21 +51,23 @@
       .querySelector('.setup-similar-item');
     var wizardElement = similarWizardTemplate.cloneNode(true);
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
 
     return wizardElement;
   }
 
   /**
    * Отрисовка блока похожих магов
+   * @param {Array} wizards Объект - Маг
    */
-  function renderWizards() {
-    var wizards = getRandomWizards(window.settings.RANDOM_WIZARDS_COUNT);
+  function renderWizards(wizards) {
+    // Фрагмент для вставки
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < wizards.length; i++) {
       fragment.appendChild(renderWizard(wizards[i]));
     }
+
     // Элемент в который будем вставлять похожих магов
     var similarListElement = document.querySelector('.setup-similar-list');
     // Очистка предыдущих магов
