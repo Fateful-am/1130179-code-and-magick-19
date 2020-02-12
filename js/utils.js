@@ -32,10 +32,18 @@
   /**
    * Возвращает случайный элемент массива
    * @param {Array} array Входной массив
-   * @return {string} случайный элемент массива
+   * @param {boolean} doRemove Удалить или нет элемент массива, по умолчанию false
+   * @return {*} случайный элемент массива
    */
-  function getRandomArraysElement(array) {
-    return array[Math.floor(Math.random() * array.length)];
+  function getRandomArraysElement(array, doRemove) {
+    doRemove = typeof doRemove !== 'undefined' ? doRemove : false;
+    var index = Math.floor(Math.random() * array.length);
+    var returnElement = array[index];
+    if (doRemove) {
+      array.splice(index, 1);
+    }
+
+    return returnElement;
   }
 
   /**

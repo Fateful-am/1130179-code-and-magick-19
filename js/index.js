@@ -7,6 +7,11 @@
   // Кнопка закрытия диалога настроек
   var setupClose = window.settings.setupDialogWrapper.querySelector('.setup-close');
 
+  // Интерфейс модуля
+  window.index = {
+    closeSetupDialogActions: closeSetupDialogActions // Действия необходимые при закрытии окна настроек
+  };
+
   /**
    * Обработчик для открытия окна настроек по клику
    */

@@ -9,6 +9,12 @@
   var FORM_ACTION = 'https://js.dump.academy/code-and-magick';
   // Количество рандомных магов
   var RANDOM_WIZARDS_COUNT = 4;
+  // URL для загрузки данных с сервера
+  var DATA_URL = 'https://js.dump.academy/code-and-magick/data';
+  // URL для отправки данных формы
+  var FORM_SEND_URL = 'https://js.dump.academy/code-and-magick';
+  // Таймаут выполнения запроса
+  var XHR_TIMEOUT = 10000;
   // Имена персонажей
   var firstNames = ['Иван',
     'Хуан Себастьян',
@@ -66,13 +72,17 @@
     MIN_USER_NAME_LENGTH: MIN_USER_NAME_LENGTH, // Минимальная длина имени пользователя
     MAX_USER_NAME_LENGTH: MAX_USER_NAME_LENGTH, // Максимальная длина имени пользователя
     RANDOM_WIZARDS_COUNT: RANDOM_WIZARDS_COUNT, // Количество рандомных магов
+    XHR_TIMEOUT: XHR_TIMEOUT, // Таймаут выполнения запроса
+    DATA_URL: DATA_URL, // URL для загрузки данныз с сервера
+    FORM_SEND_URL: FORM_SEND_URL, // URL для отправки данных формы
     firstNames: firstNames, // Имена персонажей
     secondNames: secondNames, // Фамилии персонажей
     coatColors: coatColors, // Цвета мантий персонажей
     eyesColors: eyesColors, // Цвет глаз персонажей
     fireballColor: fireballColor, // Цвет файрбола
     setupDialogWrapper: setupDialogWrapper, // Контейнер с формой настроек персонажа
-    setupUserName: setupUserName // Поле ввода имени мага
+    setupUserName: setupUserName, // Поле ввода имени мага
+    setupWizardForm: setupWizardForm // форма для ввода характеристик персонажа
   };
 
   // Установка ограничения на минимальную и максимальную длину имени персонажа
