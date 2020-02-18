@@ -15,8 +15,11 @@
   var FORM_SEND_URL = 'https://js.dump.academy/code-and-magick';
   // Таймаут выполнения запроса
   var XHR_TIMEOUT = 10000;
+  // Таймаут для устранения дребезга
+  var DEBOUNCE_INTERVAL = 500;
   // Имена персонажей
-  var firstNames = ['Иван',
+  var firstNames = [
+    'Иван',
     'Хуан Себастьян',
     'Мария',
     'Кристоф',
@@ -26,7 +29,8 @@
     'Вашингтон'
   ];
   // Фамилии персонажей
-  var secondNames = ['да Марья',
+  var secondNames = [
+    'да Марья',
     'Верон',
     'Мирабелла',
     'Вальц',
@@ -45,7 +49,8 @@
     'rgb(0, 0, 0)'
   ];
   // Цвет глаз персонажей
-  var eyesColors = ['black',
+  var eyesColors = [
+    'black',
     'red',
     'blue',
     'yellow',
@@ -75,6 +80,7 @@
     XHR_TIMEOUT: XHR_TIMEOUT, // Таймаут выполнения запроса
     DATA_URL: DATA_URL, // URL для загрузки данныз с сервера
     FORM_SEND_URL: FORM_SEND_URL, // URL для отправки данных формы
+    DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL, // Таймаут для устранения дребезга
     firstNames: firstNames, // Имена персонажей
     secondNames: secondNames, // Фамилии персонажей
     coatColors: coatColors, // Цвета мантий персонажей

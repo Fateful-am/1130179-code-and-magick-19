@@ -6,6 +6,15 @@
   var setupWizardForm = window.settings.setupDialogWrapper.querySelector('.setup-wizard-form');
   // Контейнер для файрбола
   var setupFireballWrap = window.settings.setupDialogWrapper.querySelector('.setup-fireball-wrap');
+  // Массив всех магов полученных с сервера
+  var wizards = [];
+  // Текущий внешний вид мага
+  var wizardAppearance = {
+    coatColor: window.settings.coatColors[0], // цвет мантии
+    eyesColor: window.settings.eyesColors[0] // цвет глаз
+  };
+  // последний из запущенных таймеров
+  var lastTimeout;
 
   // Интерфейс модуля
   window.setup = {
@@ -14,23 +23,61 @@
   };
 
   /**
+   * Устанавливаем новые параметры внешности
+   @param {Object} newWizardAppearance новые параметры внешности
+   */
+  function setNewWizardAppearance(newWizardAppearance) {
+    wizardAppearance.coatColor = newWizardAppearance.coatColor || wizardAppearance.coatColor;
+    wizardAppearance.eyesColor = newWizardAppearance.eyesColor || wizardAppearance.eyesColor;
+    // Если таймер не сработал - удаляем
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+
+    // выставляем новый таймер
+    lastTimeout = window.setTimeout(function () {
+      // отрисовываем похожих магов
+      window.wizards.renderWizards(window.similarWizards.getSimilarWizards(wizards, wizardAppearance));
+    }, window.settings.DEBOUNCE_INTERVAL);
+  }
+
+  /**
    * Обработчик для кастомизации внешнего вида персонажа
    * @param {MouseEvent} evt
    */
   function onSetupWizardClick(evt) {
     // Цвет заливки
     var fillColor;
+    // Новый внешний вид мага
+    var newWizardAppearance = {
+      coatColor: undefined,
+      eyesColor: undefined
+    };
     var target = evt.target;
     if (target.classList.contains('wizard-coat')) {
-      fillColor = window.utils.getRandomArraysElement(window.settings.coatColors);
+      fillColor = wizardAppearance.coatColor;
+      // случайным образом подбираем цвет мантии пока не станет отличным от текущего
+      while (fillColor === wizardAppearance.coatColor) {
+        fillColor = window.utils.getRandomArraysElement(window.settings.coatColors);
+      }
+
       setupWizardForm.querySelector('input[name=coat-color]').value = fillColor;
+      newWizardAppearance.coatColor = fillColor;
     } else if (target.classList.contains('wizard-eyes')) {
-      fillColor = window.utils.getRandomArraysElement(window.settings.eyesColors);
+      fillColor = wizardAppearance.eyesColor;
+      // случайным образом подбираем цвет мантии пока не станет отличным от текущего
+      while (fillColor === wizardAppearance.eyesColor) {
+        fillColor = window.utils.getRandomArraysElement(window.settings.eyesColors);
+      }
+
       setupWizardForm.querySelector('input[name=eyes-color]').value = fillColor;
+      newWizardAppearance.eyesColor = fillColor;
     }
 
     if (fillColor) {
       target.style.fill = fillColor;
+      // устанавливаем новые параметры внешности
+      setNewWizardAppearance(newWizardAppearance);
     }
   }
 
@@ -71,16 +118,11 @@
 
   /**
    * Обработка успешного события загрузки данных с сервера
-   * @param {Array} wizards Массив магов с сервера
+   * @param {Array} data Массив магов с сервера
    */
-  function onSuccessLoadData(wizards) {
-    // массив для случайных магов от сервера
-    var randomWizards = [];
-    for (var i = 0; i < window.settings.RANDOM_WIZARDS_COUNT; i++) {
-      randomWizards.push(window.utils.getRandomArraysElement(wizards, true));
-    }
-
-    window.wizards.renderWizards(randomWizards);
+  function onSuccessLoadData(data) {
+    wizards = data;
+    setNewWizardAppearance(wizardAppearance);
   }
 
   /**
@@ -119,18 +161,24 @@
     window.backend.save(window.settings.FORM_SEND_URL, new FormData(window.settings.setupWizardForm), onSuccessSaveData, onErrorSaveData);
   }
 
+  /**
+   * Создаем узел в разметке содержащий сообщение об щшибке
+   * @param {String} errorMessage сообщение об ошибке
+   */
   function onErrorHandler(errorMessage) {
+    // создаем элемент
     var node = document.createElement('div');
+    // стилизуем элемент
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
     node.style.position = 'absolute';
     node.style.left = 0;
     node.style.right = 0;
     node.style.fontSize = '30px';
+    // сообщение об ошибке и класс для последущей манипуляцией элементом
     node.className = 'xhr-error-message';
-
     node.textContent = errorMessage;
+    // Встраиваем в блок body
     document.body.insertAdjacentElement('afterbegin', node);
-
   }
 
 
