@@ -23,15 +23,6 @@
   };
 
   /**
-   * Обновляем список похожих магов согласно текущему внешнему виду мага
-   * @param {Object} similarWizardAppearance Текущий внешний вид мага
-   */
-  function updateWizards(similarWizardAppearance) {
-    // отрисовываем похожих магов
-    window.wizards.renderWizards(window.similarWizards.getSimilarWizards(wizards, similarWizardAppearance));
-  }
-
-  /**
    * Устанавливаем новые параметры внешности
    @param {Object} newWizardAppearance новые параметры внешности
    */
@@ -45,7 +36,8 @@
 
     // выставляем новый таймер
     lastTimeout = window.setTimeout(function () {
-      updateWizards(wizardAppearance);
+      // отрисовываем похожих магов
+      window.wizards.renderWizards(window.similarWizards.getSimilarWizards(wizards, wizardAppearance));
     }, window.settings.DEBOUNCE_INTERVAL);
   }
 
@@ -130,8 +122,7 @@
    */
   function onSuccessLoadData(data) {
     wizards = data;
-    // обновляем похожих магов
-    updateWizards(wizardAppearance);
+    setNewWizardAppearance(wizardAppearance);
   }
 
   /**
