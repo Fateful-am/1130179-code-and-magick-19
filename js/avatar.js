@@ -1,8 +1,15 @@
 'use strict';
 
 (function () {
+  // Поддерживаемые типы файлов аватарок
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
   // Контейнер для аватара
   var dialogHandle = window.settings.setupDialogWrapper.querySelector('.upload');
+  // Компонент выбирающий аватарку
+  var fileChooser = document.querySelector('.upload input[type=file]');
+  // Картинка для вставки аватара
+  var preview = document.querySelector('.setup-user-pic');
 
   /**
    * Обработка нажатия кнопки мыши на аватар
@@ -68,4 +75,27 @@
 
   // Добавляем обработчик нажатия кнопки мыши на аватар
   dialogHandle.addEventListener('mousedown', onDialogHandleMouseDown);
+  // Обработчик изменения состояния выбоа файла
+  fileChooser.addEventListener('change', function () {
+    // первый из списка файлов
+    var file = fileChooser.files[0];
+    // Имя файла
+    var fileName = file.name.toLowerCase();
+    // проверка по расширению файла
+    var matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function () {
+        preview.src = reader.result;
+      });
+
+      reader.readAsDataURL(file);
+    }
+
+  });
+
 })();
