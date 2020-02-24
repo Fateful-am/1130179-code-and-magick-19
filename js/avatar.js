@@ -91,6 +91,8 @@
 
       reader.addEventListener('load', function () {
         preview.src = reader.result;
+        // меняем аватарку на главной странице
+        document.querySelector('.setup-open-icon').src = reader.result;
       });
 
       reader.readAsDataURL(file);
